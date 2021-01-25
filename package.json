@@ -1,0 +1,44 @@
+{
+  "name": "appscanner",
+  "version": "1.0.1",
+  "author": "Neasit",
+  "scripts": {
+    "prettier-js": "prettier --write webapp/**/*.js",
+    "lint": "eslint --debug webapp/ || exit 0",
+    "lint:write": "eslint --debug webapp/ --fix || exit 0",
+    "pretty-xml": "js-beautify -r ./webapp/view/**/*.xml --type=html --config=.jsbeautifyrc",
+    "mtabuild": "mbt build -p=neo -s=./ -t=./mta_archives",
+    "build": "ui5 build --cleanDest=true --include-task=generateResourcesJson generateManifestBundle generateCachebusterInfo",
+    "deploy": "grunt deploy",
+    "start": "ui5 serve"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^2.5.0",
+    "@ui5/logger": "^1.0.2",
+    "ui5-middleware-proxy": "^0.0.10",
+    "ui5-middleware-servestatic": "*",
+    "ui5-task-transpile": "*",
+    "grunt-nwabap-ui5uploader": "^1.0.7",
+    "dotenv": "^8.2.0",
+    "grunt": "^1.0.4",
+    "eslint": "^5.13.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "prettier": "^1.14.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "babel-eslint": "^8.2.3",
+    "eslint-plugin-babel": "^5.1.0",
+    "js-beautify": "^1.8.9",
+    "js-yaml": "^3.14.0",
+    "grunt-run": "0.8.1",
+    "mbt": "^1.0.14"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-servestatic",
+      "ui5-middleware-proxy",
+      "ui5-task-transpile"
+    ]
+  }
+}

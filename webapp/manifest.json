@@ -1,0 +1,118 @@
+{
+	"_version": "1.17.0",
+	"start_url": "index.html",
+
+	"sap.app": {
+		"id": "app.scanner",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "${version}"
+		},
+		"title": "{{appTitle}}",
+		"subTitle": "{{subTitle}}",
+		"shortTitle": "{{shorttitle}}",
+		"description": "{{description}}",
+		"info": "{{info}}",
+		"tags": {
+			"keywords": ["Example"]
+		},
+		"dataSources": {},
+		"resources": "resources.json",
+		"offline": true,
+		"destination": {
+			"name": "SAP_ERP"
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "app.scanner.view.App",
+			"async": true,
+			"id": "web4al",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.66.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {},
+				"sap.ui.commons": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "app.scanner.i18n.i18n"
+				}
+			}
+		},
+		"resources": {
+			"js": [
+				{
+					"uri": "./lib/zxingjs0153.min.js"
+				}
+			],
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "app.scanner.view",
+				"controlId": "appscanner",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": "notFound"
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "StartPage",
+					"target": "StartPage"
+				}
+			],
+			"targets": {
+				"StartPage": {
+					"viewName": "StartPage",
+					"viewId": "StartPage"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "",
+		"uriNwbc": ""
+	}
+}

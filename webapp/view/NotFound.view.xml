@@ -1,0 +1,21 @@
+<mvc:View
+  controllerName="app.scanner.controller.NotFound"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+>
+  <MessagePage
+    title="{i18n>notFoundTitle}"
+    text="{i18n>notFoundText}"
+    icon="{sap-icon://document}"
+    id="page"
+    description="Example"
+  >
+    <customDescription>
+      <Link
+        id="link"
+        text="{i18n>backToStartPage}"
+        press="onLinkPressed"
+      />
+    </customDescription>
+  </MessagePage>
+</mvc:View>

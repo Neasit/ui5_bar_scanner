@@ -1,0 +1,50 @@
+/*
+  version: 1.0
+  Neasit
+  base rules for UI5 projects
+*/
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb-base/legacy",
+    "plugin:promise/recommended"
+  ],
+  "plugins": [
+    "promise",
+    "prettier",
+  ],
+  "rules": {
+        "no-lonely-if": "off",
+        "vars-on-top": "off",
+        "linebreak-style": "off",
+        "func-names": "off",
+        "arrow-parens": "off",
+        "object-curly-newline": "off",
+        "no-mixed-operators": "off",
+        "arrow-body-style": "off",
+        "function-paren-newline": "off",
+        "no-plusplus": "off",
+        "space-before-function-paren": 0,
+        "max-len": ["error", 180, 2, { ignoreUrls: true, }],  // SAP say - 200 ??
+        "no-console": "error",
+        "no-alert": "error",
+        "no-param-reassign": "off",
+        "radix": "off",
+        "prettier/prettier": ["error"],
+        "comma-dangle": ["error", "always-multiline"],  // SAP say - never ??
+        "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }]  // SAP say- off ??
+  },
+  "env": {
+    "es6": false,
+    "browser": true,
+    "node": false,
+  },
+  "globals": {
+    "sap": "readable",
+    "module": "readable",
+    "require": "readable",
+    "Promise": "readable",
+    "jQuery": "readable",
+    "$": "readable",
+  }
+}

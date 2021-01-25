@@ -1,0 +1,15 @@
+_schema-version: '3.1'
+ID: app.example
+version: 1.0.0
+parameters:
+  description: App example
+  hcp-deployer-version: 1.0.0
+  title: Example
+modules:
+  - name: appexample
+    type: com.sap.hcp.html5
+    path: dist
+    parameters:
+      display-name: '[APP] appexample'
+      name: appexample
+      version: 1.0.0
