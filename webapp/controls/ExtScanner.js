@@ -8,16 +8,9 @@ sap.ui.define(
     'sap/m/ResponsivePopover',
     'sap/m/List',
     'sap/m/DisplayListItem',
+    'sap/ui/Device',
   ],
-  function(
-    Control,
-    jQuery,
-    JSONModel,
-    MessageToast,
-    ResponsivePopover,
-    List,
-    DisplayListItem
-  ) {
+  function(Control, jQuery, JSONModel, MessageToast, ResponsivePopover, List, DisplayListItem, Device) {
     'use strict';
 
     return Control.extend('app.scanner.controls.ExtScanner', {
@@ -87,7 +80,10 @@ sap.ui.define(
           tryHarder: this.getTryHarder(),
           settings: this.getSettings(),
         });
+        // i18n from owner or library if possible
+        this.setModel(sap.ui.core.Component.getOwnerComponentFor(this).getModel('i18n'), 'i18n');
         this.setModel(this._oScanModel, 'scanModel');
+        this.setModel(new JSONModel(Device), 'device');
         // attach
         sap.ui.Device.orientation.attachHandler(this.adaptVideoSourceSize.bind(this));
       },
@@ -99,6 +95,13 @@ sap.ui.define(
 
       exit: function() {
         sap.ui.Device.orientation.detachHandler(this.adaptVideoSourceSize);
+      },
+
+      setDecoderKey: function(sKey) {
+        if (this._oScanModel) {
+          this._oScanModel.setProperty('/decoderKey', sKey);
+        }
+        this.setProperty('decoderKey', sKey);
       },
 
       setSettings: function(bValue) {
@@ -121,7 +124,7 @@ sap.ui.define(
           aDecoders = aDecoders.concat(oDecoders);
         }
         if (this._oScanModel) {
-          this._oScanModel.setProperty('decoders', aDecoders);
+          this._oScanModel.setProperty('/decoders', aDecoders);
         }
         this.setProperty('decoders', aDecoders);
       },
@@ -183,11 +186,7 @@ sap.ui.define(
 
       getSettingsPopover: function() {
         if (!this.oSettingsPopover) {
-          this.oSettingsPopover = sap.ui.xmlfragment(
-            this.getId(),
-            'app.scanner.controls.fragments.settingsPopover',
-            this
-          );
+          this.oSettingsPopover = sap.ui.xmlfragment(this.getId(), 'app.scanner.controls.fragments.settingsPopover', this);
           this._getScanDialog().addDependent(this.oSettingsPopover);
         }
         return this.oSettingsPopover;
@@ -392,27 +391,21 @@ sap.ui.define(
 
       _getBarCodeDecoder: function() {
         if (!this._oBarCodeDecoder) {
-          this._oBarCodeDecoder = new ZXing.BrowserBarcodeReader(
-            new Map([['TRY_HARDER', this.getTryHarder()]])
-          );
+          this._oBarCodeDecoder = new ZXing.BrowserBarcodeReader(new Map([['TRY_HARDER', this.getTryHarder()]]));
         }
         return this._oBarCodeDecoder;
       },
 
       _getQRCodeDecoder: function() {
         if (!this._oQRCodeDecoder) {
-          this._oQRCodeDecoder = new ZXing.BrowserQRCodeReader(
-            new Map([['TRY_HARDER', this.getTryHarder()]])
-          );
+          this._oQRCodeDecoder = new ZXing.BrowserQRCodeReader(new Map([['TRY_HARDER', this.getTryHarder()]]));
         }
         return this._oQRCodeDecoder;
       },
 
       _getMultiCodeDecoder: function() {
         if (!this._oMultiCodeDecoder) {
-          this._oMultiCodeDecoder = new ZXing.BrowserMultiFormatReader(
-            new Map([['TRY_HARDER', this.getTryHarder()]])
-          );
+          this._oMultiCodeDecoder = new ZXing.BrowserMultiFormatReader(new Map([['TRY_HARDER', this.getTryHarder()]]));
         }
         return this._oMultiCodeDecoder;
       },
@@ -472,11 +465,7 @@ sap.ui.define(
 
       _getScanDialog: function() {
         if (!this._oTD) {
-          this._oTD = sap.ui.xmlfragment(
-            this.getId(),
-            'app.scanner.controls.fragments.scanDialog',
-            this
-          );
+          this._oTD = sap.ui.xmlfragment(this.getId(), 'app.scanner.controls.fragments.scanDialog', this);
           if (this.getEditMode() === true) {
             this._addHeader(this._oTD);
           }
@@ -489,11 +478,7 @@ sap.ui.define(
 
       _getInputDialog: function() {
         if (!this._oID) {
-          this._oID = sap.ui.xmlfragment(
-            this.getId(),
-            'app.scanner.controls.fragments.inputDialog',
-            this
-          );
+          this._oID = sap.ui.xmlfragment(this.getId(), 'app.scanner.controls.fragments.inputDialog', this);
           this.addDependent(this._oID);
         }
         return this._oID;
@@ -509,11 +494,7 @@ sap.ui.define(
 
       _startScan: function() {
         this._oDecoder
-          .decodeFromVideoDevice(
-            this._oScanModel.getProperty('/videoDeviceId'),
-            this.getId() + '--scanVideo',
-            this._saveScannedValue.bind(this)
-          )
+          .decodeFromVideoDevice(this._oScanModel.getProperty('/videoDeviceId'), this.getId() + '--scanVideo', this._saveScannedValue.bind(this))
           .catch(
             function(err) {
               if (err && err.name && err.name === 'NotAllowedError') {
@@ -586,11 +567,7 @@ sap.ui.define(
 
       _getDialogHeader: function() {
         if (!this._oHeader) {
-          this._oHeader = sap.ui.xmlfragment(
-            this.getId(),
-            'app.scanner.controls.fragments.toolbar',
-            this
-          );
+          this._oHeader = sap.ui.xmlfragment(this.getId(), 'app.scanner.controls.fragments.toolbar', this);
           this._getScanDialog().addDependent(this._oHeader);
         }
         return this._oHeader;
@@ -598,7 +575,7 @@ sap.ui.define(
 
       getTitle: function(sText, sMode) {
         return sMode === 'Multi' ? sText + ' Multiple formats' : sText + ' ' + sMode;
-      }
+      },
     });
   }
 );

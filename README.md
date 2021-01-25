@@ -2,6 +2,18 @@
 
 Example of JS native scanner in SAPUI5 Application based on [ZXING](https://github.com/zxing-js/library)
 
+Scanner control with dialog:
+
+Properties:
+
+  - `type` - boolean - type of scanner ('QR-Code', 'Barcode', 'Multi')
+  - `editMode` - boolean - show input field in dialog and user can change the scanned value
+  - `settings` - boolean - show the popover with decoders settings
+  - `decoderKey` - string - default decoder (raw by default) 
+  - `decoders` - array - array of decoders (object - { key: 'example', text: 'Example', decoder: function(oResulrt) { return oResult.text }})
+  - `tryHarder` - bolean - options for ZXing
+  - `laser` - boolean - show decorative lines
+
 # How to setup
 
 1. Install Node.js (https://nodejs.org/en/download/package-manager)
